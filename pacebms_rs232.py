@@ -223,10 +223,10 @@ class PACEBMS232:
     
     def parse_analog_data(self, response):
 
-        if self.bms_type == "PACE_LV_V1":
-            packs_data = self.parse_analog_data_v1(response)
-        else:
+        if self.bms_type == "PACE_LV_V2":
             packs_data = self.parse_analog_data_v2(response)
+        else:
+            packs_data = self.parse_analog_data_v1(response)
 
         return packs_data
 
