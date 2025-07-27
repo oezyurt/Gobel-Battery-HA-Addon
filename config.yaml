@@ -28,7 +28,7 @@ options:
   battery_manufacturer: "Gobel Power"
   battery_model: "GP-SR1-PC200"
   max_parallel_allowed: 3
-  connection_type: ""
+  connection_type: "ethernet"
   battery_port: "rs232"
   bms_type: "PACE_LV_V1"
   bms_ip_address: "192.168.112.142"
