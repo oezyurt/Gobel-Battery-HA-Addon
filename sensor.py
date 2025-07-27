@@ -157,7 +157,7 @@ def run():
                 if result == pack_number:
                     pack_count = pack_number
 
-            for pack_number in range(0, pack_count):
+            for pack_number in range(1, pack_count):
                 pack_list.append(pack_number)
             
             logger.info(f"Found packs list: {pack_list}")
