@@ -140,7 +140,7 @@ class PACEBMS232:
         cid1 = b"\x34\x36"
         cid2 = commands_table[command]
         
-        pack_number = pack_number if pack_number is not None else 1
+        pack_number = pack_number if pack_number is not None else 255
     
         info = f"{pack_number:02X}".encode('ascii')
 
