@@ -126,22 +126,41 @@ def run():
 
             logger.info("PACE_LV BMS RS232 Working...")
 
+            pack_list = []
+
+            for pack_number in range(0, max_parallel_allowed+1):  #up to max_parallel_allowed
+                result = bms.get_pack_num_data(pack_number)
+                logger.debug(f"pack_number {result}")
+                if result == pack_number:
+                    pack_list.append(pack_number)
+
+            logger.info(f"Found packs list: {pack_list}")
+            
+            '''
             try:
                 while True:  # Run continuously
-                    
                     # Fetch analog and warning data every 5 seconds
                     bms.publish_analog_data_mqtt()
                     time.sleep(1)
                     bms.publish_warning_data_mqtt()
-
                     time.sleep(data_refresh_interval)  # Sleep for 5 seconds between each iteration
-
             except KeyboardInterrupt:
                 logger.info("Stopping the program...")
-            
             finally:
                 mqtt_client.loop_stop()
-
+            '''
+            
+            if len(pack_list) > 0:
+                try:
+                    while True:  # Run continuously
+                        bms.publish_analog_data_mqtt(pack_list)
+                        time.sleep(1)
+                        bms.publish_warning_data_mqtt(pack_list)
+                        time.sleep(data_refresh_interval)  # Sleep for 5 seconds between each iteration
+                except KeyboardInterrupt:
+                    logger.info("Stopping the program...")
+                finally:
+                    mqtt_client.loop_stop()
 
         if battery_port == 'rs485':
 
