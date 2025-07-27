@@ -116,15 +116,15 @@ def run():
         logger.info("BMS Connection failed")
         return
 
-    if bms_type == 'PACE_LV':
+    if bms_type.startswith("PACE_LV"):
 
         if battery_port == 'rs232':
 
             bms = PACEBMS232(bms_comm, ha_comm, bms_type, data_refresh_interval, debug, if_random)
 
-            logger.info("PACE_LV BMS Monitor Working...")
+            logger.info("{bms_type} BMS Monitor Working...")
 
-            logger.info("PACE_LV BMS RS232 Working...")
+            logger.info("{bms_type} BMS RS232 Working...")
             
             try:
                 while True:  # Run continuously
