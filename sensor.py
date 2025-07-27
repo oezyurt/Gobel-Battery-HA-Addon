@@ -149,17 +149,20 @@ def run():
             logger.info("Looking for valid packs...")
 
             pack_list = []
+            pack_count = 0
 
             for pack_number in range(0, max_parallel_allowed+1):  #up to max_parallel_allowed
                 result = bms.get_pack_num_data(pack_number)
                 logger.debug(f"pack_number {result}")
                 if result == pack_number:
-                    pack_list.append(pack_number)
+                    pack_count = pack_number
 
+            for pack_number in range(0, pack_count):
+                pack_list.append(pack_number)
+            
             logger.info(f"Found packs list: {pack_list}")
             
             if len(pack_list) > 0:
-
                 try:
                     while True:  # Run continuously
 
