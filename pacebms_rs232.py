@@ -1120,7 +1120,7 @@ class PACEBMS232:
             return analog_data
     
         except Exception as e:
-            self.logger.error(f"An error occurred: {e}")
+            self.logger.error(f"An error occurred in get_analog_data", exc_info=True)
             return None
     
     
@@ -1154,7 +1154,7 @@ class PACEBMS232:
             return warning_data
     
         except Exception as e:
-            self.logger.error(f"An error occurred: {e}")
+            self.logger.error(f"An error occurred in get_warning_data", exc_info=True)
             return None
     
     
@@ -1187,7 +1187,7 @@ class PACEBMS232:
             return capacity_data
     
         except Exception as e:
-            self.logger.error(f"An error occurred: {e}")
+            self.logger.error(f"An error occurred in get_capacity_data", exc_info=True)
             return None
     
     
@@ -1221,7 +1221,7 @@ class PACEBMS232:
             return bms_info, pack_info
     
         except Exception as e:
-            self.logger.error(f"An error occurred: {e}")
+            self.logger.error(f"An error occurred in get_product_info_data", exc_info=True)
             return None
 
     def get_pack_num_data(self, pack_number):
@@ -1253,7 +1253,7 @@ class PACEBMS232:
             return pack_number_data
     
         except Exception as e:
-            self.logger.error(f"An error occurred: {e}")
+            self.logger.error(f"An error occurred in get_pack_num_data", exc_info=True)
             return None
 
     def check_if_pack_exsit(self, pack_number):
@@ -1265,7 +1265,7 @@ class PACEBMS232:
                 if_exsit = False
 
         except Exception as e:
-            self.logger.error(f"An error occurred: {e}")
+            self.logger.error(f"An error occurred in check_if_pack_exsit", exc_info=True)
             return None
 
     def publish_analog_data_api(self, pack_number=None):
