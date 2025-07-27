@@ -1,6 +1,6 @@
 name: "Gobel Battery Monitor"
 description: "Battery Monitor supports various BMS - Home Assistant Addon"
-version: "1.9.26"
+version: "1.9.27"
 slug: "gobel_battery_monitor"
 url: "https://github.com/oezyurt/Gobel-Battery-HA-Addon"
 init: false
@@ -29,8 +29,8 @@ options:
   battery_model: "GP-SR1-PC200"
   max_parallel_allowed: 3
   connection_type: "ethernet"
-  battery_port: "rs232"
-  bms_type: "PACE_LV_V1"
+  battery_port: "rs485"
+  bms_type: "PACE_LV"
   bms_ip_address: "192.168.112.142"
   bms_ip_port: 20108
   bms_usb_port: "/dev/ttyUSB0"
@@ -50,7 +50,7 @@ schema:
   max_parallel_allowed: int
   connection_type: list(ethernet|wifi|serial)
   battery_port: list(rs232|rs485)
-  bms_type: list(PACE_LV_V1|PACE_LV_V2|JK_PB|TDT)
+  bms_type: list(PACE_LV|JK_PB|TDT)
   bms_ip_address: str
   bms_ip_port: int
   bms_usb_port: str
