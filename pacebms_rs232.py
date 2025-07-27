@@ -270,10 +270,10 @@ class PACEBMS232:
         num_packs = int(fields[offset], 16)
         self.logger.debug(f"num_packs: {num_packs}")
         offset += 1
-        pack_number = 0
+        pack_index = 0
     
         for pack_index in range(num_packs):
-            pack_number += 1
+            pack_index += 1
             pack_data = {}
     
             # Number of cells
@@ -281,7 +281,7 @@ class PACEBMS232:
             offset += 1
             pack_data['view_num_cells'] = num_cells
             
-            self.logger.debug(f"pack_number generate data: {pack_number} num_cells: {num_cells}")
+            self.logger.debug(f"pack_index {pack_index} generate data for {num_cells} cells")
 
             # Cell voltages
             cell_voltages = []
@@ -370,7 +370,7 @@ class PACEBMS232:
             pack_data['view_SOH'] = round(pack_full_capacity / pack_design_capacity * 100, 0)
     
             packs_data.append(pack_data)
-            self.logger.debug(f"num_packs: {num_packs}")
+            self.logger.debug(f"pack_index: {pack_index} ende")
 
         return packs_data
 
