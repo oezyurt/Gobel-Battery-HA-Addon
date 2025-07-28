@@ -917,6 +917,11 @@ class PACEBMS485:
         units = {
             'view_num_cells': 'cells',
             'cell_voltages': 'mV',
+            'cell_voltage_max': 'mV',
+            'cell_voltage_min': 'mV',
+            'cell_voltage_max_index': '',
+            'cell_voltage_min_index': '',
+            'cell_voltage_diff': 'mV',
             'view_num_temps': 'NTCs',
             'temperatures': '℃',
             'view_current': 'A',
@@ -945,6 +950,11 @@ class PACEBMS485:
             'total_energy_discharged': 'mdi:battery-negative',
             'view_num_cells': 'mdi:database',
             'cell_voltages': 'mdi:sine-wave',
+            'cell_voltage_max': 'mdi:align-vertical-top',
+            'cell_voltage_min': 'mdi:align-vertical-bottom',
+            'cell_voltage_max_index': 'mdi:database',
+            'cell_voltage_min_index': 'mdi:database',
+            'cell_voltage_diff': 'mdi:format-align-middle',
             'view_num_temps': 'mdi:database',
             'temperatures': 'mdi:thermometer',
             'view_current': 'mdi:current-dc',
@@ -972,7 +982,15 @@ class PACEBMS485:
             'total_SOH': 'null',
             'total_energy_charged': 'energy',
             'total_energy_discharged': 'energy',
+            'total_cell_voltage_max': 'voltage',
+            'total_cell_voltage_min': 'voltage',
+            'total_cell_voltage_diff': 'voltage',
             'cell_voltages': 'voltage',
+            'cell_voltage_max': 'voltage',
+            'cell_voltage_min': 'voltage',
+            'cell_voltage_max_index': 'null',
+            'cell_voltage_min_index': 'null',
+            'cell_voltage_diff': 'voltage',
             'temperatures': 'temperature',
             'view_num_cells': 'null',
             'view_num_temps': 'null',
@@ -1005,6 +1023,11 @@ class PACEBMS485:
             'total_energy_discharged': 'total',
             'view_num_cells': 'measurement',
             'cell_voltages': 'measurement',
+            'cell_voltage_max': 'measurement',
+            'cell_voltage_min': 'measurement',
+            'cell_voltage_max_index': 'measurement',
+            'cell_voltage_min_index': 'measurement',
+            'cell_voltage_diff': 'measurement',
             'view_num_temps': 'measurement',
             'temperatures': 'measurement',
             'view_current': 'measurement',
@@ -1084,6 +1107,23 @@ class PACEBMS485:
         self.ha_comm.publish_sensor_state(total_energy_discharged, 'Wh', "total_energy_discharged")
         self.ha_comm.publish_sensor_discovery("total_energy_discharged", "Wh", icons['total_energy_discharged'], deviceclasses['total_energy_discharged'], stateclasses['total_energy_discharged'])
 
+        # Extract all cell_voltages lists and flatten them into a single list
+        all_cell_voltages = [voltage for d in analog_data for voltage in d.get('cell_voltages', [])]
+
+        # Find the maximum and min value from the flattened list
+        total_cell_voltage_max = max(all_cell_voltages, default=None)
+        self.ha_comm.publish_sensor_state(total_cell_voltage_max, 'mV', "total_cell_voltage_max")
+        self.ha_comm.publish_sensor_discovery("total_cell_voltage_max", "mV", icons['total_cell_voltage_max'], deviceclasses['total_cell_voltage_max'], stateclasses['total_cell_voltage_max'])
+
+        total_cell_voltage_min = min(all_cell_voltages, default=None)
+        self.ha_comm.publish_sensor_state(total_cell_voltage_min, 'mV', "total_cell_voltage_min")
+        self.ha_comm.publish_sensor_discovery("total_cell_voltage_min", "mV", icons['total_cell_voltage_min'], deviceclasses['total_cell_voltage_min'], stateclasses['total_cell_voltage_min'])
+
+        total_cell_voltage_diff = total_cell_voltage_max - total_cell_voltage_min
+        self.ha_comm.publish_sensor_state(total_cell_voltage_diff, 'mV', "total_cell_voltage_diff")
+        self.ha_comm.publish_sensor_discovery("total_cell_voltage_diff", "mV", icons['total_cell_voltage_diff'], deviceclasses['total_cell_voltage_diff'], stateclasses['total_cell_voltage_diff'])
+
+        
         if self.if_random:
             import random
             random_number = random.randint(1, 100)
