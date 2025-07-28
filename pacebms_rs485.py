@@ -221,7 +221,19 @@ class PACEBMS485:
             cell_voltages.append(voltage)
             offset += 2
         pack_data['cell_voltages'] = cell_voltages
+        
+        cell_voltage_max = max(cell_voltages)
+        cell_voltage_min = min(cell_voltages)
+        cell_voltage_max_index = cell_voltages.index(cell_voltage_max) + 1
+        cell_voltage_min_index = cell_voltages.index(cell_voltage_min) + 1
 
+        pack_data['cell_voltage_max'] = cell_voltage_max
+        pack_data['cell_voltage_min'] = cell_voltage_min
+        pack_data['cell_voltage_max_index'] = cell_voltage_max_index
+        pack_data['cell_voltage_min_index'] = cell_voltage_min_index
+
+        pack_data['cell_voltage_diff'] = cell_voltage_max - cell_voltage_min
+        
         # Number of temperature sensors
         num_temps = int(fields[offset], 16)
         offset += 1
